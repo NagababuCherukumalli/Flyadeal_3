@@ -35,24 +35,54 @@ public class flyAdeal extends FlyAdealCacheFlow  {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
         return futureDate.format(formatter);
     }
+    
+	public static void search(WebDriver driver) throws Exception
+	{
+
+		driver.get("https://accounts.google.com/v3/signin/identifier?dsh=S873427101%3A1670174877878096&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&flowEntry=ServiceLogin&flowName=GlifWebSignIn&rip=1&sacu=1&service=mail&ifkv=ARgdvAv7qIg9j-X7zxwLWrETGRTaquhiB_tbb7YW19ONpQZ-z4IHi9LknQfITZIbwMLY0zXURVL5jg");
+	    Thread.sleep(1500);
+		
+		
+	}
+    
     public static void FlightDetails2(WebDriver driver, Database PnrDetails) throws Exception {
         String date;
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(19)); // Set the maximum wait time to 60 seconds
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(25)); // Set the maximum wait time to 60 seconds
 		boolean isPageLoaded = false;
-		int maxAttempts = 3;
+		int maxAttempts = 2;
 		int attempt = 1;
 
 		while (!isPageLoaded && attempt <= maxAttempts) {
 		    try {
 		        // Wait for the page to load completely
 		        isPageLoaded = wait.until(ExpectedConditions.urlContains("https://www.flyadeal.com/en/select-flight"));
-		    }  catch (Exception e) {
-		      
+		    } catch (Exception e) {
+		   
+		    	try {
+		    	driver.manage().deleteAllCookies();
+		    	search(driver);
+		    	driver.manage().deleteAllCookies();
 		        // Refresh the page
 		        driver.get(flyAdealApiUrl);
-		        Thread.sleep(4000);
+		        Thread.sleep(10000);
 		        System.out.println("Cookies deleted. Page refreshed.");
+		        }
+		    	catch (Exception e1) {
+		    		try {
+		    		 isPageLoaded = wait.until(ExpectedConditions.urlContains("https://www.flyadeal.com/en/select-flight"));
+		    		}
+		    		catch (Exception e2) {
+				    	driver.manage().deleteAllCookies();
+				    	search(driver);
+				    	driver.manage().deleteAllCookies();
+				        // Refresh the page
+				        driver.get(flyAdealApiUrl);
+				        Thread.sleep(10000);
+				        System.out.println("Cookies deleted. Page refreshed.");
+				        }
+		    	}
+		    	
 		    }
 
 		    attempt++;
