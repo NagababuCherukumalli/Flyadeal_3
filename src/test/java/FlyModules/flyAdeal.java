@@ -21,7 +21,7 @@ public class flyAdeal extends FlyAdealCacheFlow  {
 	
 	static String Depdate=null;
 	static String Currency=null;
-	static String Year = "2024";
+	static String Year =null;
 	
 	private static String getCurrentDateFormatted(String format) {
         LocalDate currentDate = LocalDate.now();
@@ -93,11 +93,11 @@ public class flyAdeal extends FlyAdealCacheFlow  {
             driver.findElement(By.cssSelector("div.select_date_previous")).click();
             Thread.sleep(1000);
 
-            for (int weekOffset = 0; weekOffset < 7; weekOffset++) {
+            for (int weekOffset = 0; weekOffset < 9; weekOffset++) {
                 for (int dayOffset = 1; dayOffset <= 7; dayOffset++) {
                     int totalOffset = weekOffset * 7 + dayOffset;
 
-                    if (totalOffset > 45) {
+                    if (totalOffset > 63) {
                         break; // Exit the loop if the total days processed exceed 70
                     }
 
@@ -112,11 +112,11 @@ public class flyAdeal extends FlyAdealCacheFlow  {
                     String day = dateParts[0];
                     String monthAbbreviation = dateParts[1];
                     
-                    /*if (monthAbbreviation.equals("Nov") || monthAbbreviation.equals("Dec")) {
-                    	Year = "2023";
-                    } else {
+                    if (monthAbbreviation.equals("Nov") || monthAbbreviation.equals("Dec")) {
                     	Year = "2024";
-                    }*/
+                    } else {
+                    	Year = "2025";
+                    }
                     String Departdate = String.format("%s %s %s", day, monthAbbreviation, Year);
 
                     //System.out.println("SRP Date: " + Departdate);
@@ -166,7 +166,7 @@ public class flyAdeal extends FlyAdealCacheFlow  {
                     }*/
 
                     // If it's the last iteration of the inner loop and not the last week, click on the "Next" button
-                    if (dayOffset == 7 && weekOffset < 6) {
+                    if (dayOffset == 7 && weekOffset < 8) {
                         driver.findElement(By.cssSelector("div.select-date-range.next-date-range")).click();
                         Thread.sleep(1000);
                     }
