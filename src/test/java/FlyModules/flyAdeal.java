@@ -93,11 +93,11 @@ public class flyAdeal extends FlyAdealCacheFlow  {
             driver.findElement(By.cssSelector("div.select_date_previous")).click();
             Thread.sleep(1000);
 
-            for (int weekOffset = 0; weekOffset < 9; weekOffset++) {
+            for (int weekOffset = 0; weekOffset < 6; weekOffset++) {
                 for (int dayOffset = 1; dayOffset <= 7; dayOffset++) {
                     int totalOffset = weekOffset * 7 + dayOffset;
 
-                    if (totalOffset > 63) {
+                    if (totalOffset > 42) {
                         break; // Exit the loop if the total days processed exceed 70
                     }
 
@@ -166,7 +166,7 @@ public class flyAdeal extends FlyAdealCacheFlow  {
                     }*/
 
                     // If it's the last iteration of the inner loop and not the last week, click on the "Next" button
-                    if (dayOffset == 7 && weekOffset < 8) {
+                    if (dayOffset == 7 && weekOffset < 5) {
                         driver.findElement(By.cssSelector("div.select-date-range.next-date-range")).click();
                         Thread.sleep(1000);
                     }
